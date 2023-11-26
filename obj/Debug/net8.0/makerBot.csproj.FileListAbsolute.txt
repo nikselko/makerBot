@@ -1,0 +1,15 @@
+C:\Users\nikse\Source\Repos\makerBot\makerBot\bin\Debug\net8.0\makerBot.exe
+C:\Users\nikse\Source\Repos\makerBot\makerBot\bin\Debug\net8.0\makerBot.deps.json
+C:\Users\nikse\Source\Repos\makerBot\makerBot\bin\Debug\net8.0\makerBot.runtimeconfig.json
+C:\Users\nikse\Source\Repos\makerBot\makerBot\bin\Debug\net8.0\makerBot.dll
+C:\Users\nikse\Source\Repos\makerBot\makerBot\bin\Debug\net8.0\makerBot.pdb
+C:\Users\nikse\Source\Repos\makerBot\makerBot\obj\Debug\net8.0\makerBot.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\nikse\Source\Repos\makerBot\makerBot\obj\Debug\net8.0\makerBot.AssemblyInfoInputs.cache
+C:\Users\nikse\Source\Repos\makerBot\makerBot\obj\Debug\net8.0\makerBot.AssemblyInfo.cs
+C:\Users\nikse\Source\Repos\makerBot\makerBot\obj\Debug\net8.0\makerBot.csproj.CoreCompileInputs.cache
+C:\Users\nikse\Source\Repos\makerBot\makerBot\obj\Debug\net8.0\makerBot.sourcelink.json
+C:\Users\nikse\Source\Repos\makerBot\makerBot\obj\Debug\net8.0\makerBot.dll
+C:\Users\nikse\Source\Repos\makerBot\makerBot\obj\Debug\net8.0\refint\makerBot.dll
+C:\Users\nikse\Source\Repos\makerBot\makerBot\obj\Debug\net8.0\makerBot.pdb
+C:\Users\nikse\Source\Repos\makerBot\makerBot\obj\Debug\net8.0\makerBot.genruntimeconfig.cache
+C:\Users\nikse\Source\Repos\makerBot\makerBot\obj\Debug\net8.0\ref\makerBot.dll
