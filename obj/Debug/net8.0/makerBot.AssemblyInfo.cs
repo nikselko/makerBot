@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("makerBot")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cbe6c440517ca393edff2f5fa4238db823358f56")]
 [assembly: System.Reflection.AssemblyProductAttribute("makerBot")]
 [assembly: System.Reflection.AssemblyTitleAttribute("makerBot")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
