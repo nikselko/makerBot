@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\nikse\\Source\\Repos\\nikselko\\makerBot\\makerBot\\makerBot.csproj": {}
+    "C:\\Users\\nikse\\Source\\Repos\\nikselko\\makerBot\\makerBot.csproj": {}
   },
   "projects": {
-    "C:\\Users\\nikse\\Source\\Repos\\nikselko\\makerBot\\makerBot\\makerBot.csproj": {
+    "C:\\Users\\nikse\\Source\\Repos\\nikselko\\makerBot\\makerBot.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\nikse\\Source\\Repos\\nikselko\\makerBot\\makerBot\\makerBot.csproj",
+        "projectUniqueName": "C:\\Users\\nikse\\Source\\Repos\\nikselko\\makerBot\\makerBot.csproj",
         "projectName": "makerBot",
-        "projectPath": "C:\\Users\\nikse\\Source\\Repos\\nikselko\\makerBot\\makerBot\\makerBot.csproj",
+        "projectPath": "C:\\Users\\nikse\\Source\\Repos\\nikselko\\makerBot\\makerBot.csproj",
         "packagesPath": "C:\\Users\\nikse\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\nikse\\Source\\Repos\\nikselko\\makerBot\\makerBot\\obj\\",
+        "outputPath": "C:\\Users\\nikse\\Source\\Repos\\nikselko\\makerBot\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -44,6 +44,12 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "Telegram.Bot": {
+              "target": "Package",
+              "version": "[16.0.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
