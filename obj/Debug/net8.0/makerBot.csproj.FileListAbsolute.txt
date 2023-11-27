@@ -47,3 +47,4 @@ C:\Users\nikse\Source\Repos\nikselko\makerBot\bin\Debug\net8.0\Telegram.Bot.dll
 C:\Users\nikse\Source\Repos\nikselko\makerBot\obj\Debug\net8.0\makerBot.csproj.CopyComplete
 C:\Users\nikse\Source\Repos\nikselko\makerBot\obj\Debug\net8.0\makerBot.genruntimeconfig.cache
 C:\Users\nikse\Source\Repos\nikselko\makerBot\obj\Debug\net8.0\ref\makerBot.dll
+C:\Users\nikse\Source\Repos\nikselko\makerBot\bin\Debug\net8.0\YoutubeExtractor.dll
