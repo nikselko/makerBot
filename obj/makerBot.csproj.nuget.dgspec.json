@@ -47,7 +47,7 @@
           "dependencies": {
             "SharpGrabber": {
               "target": "Package",
-              "version": "[2.1.1, )"
+              "version": "[2.1.0, )"
             },
             "SharpGrabber.Converter": {
               "target": "Package",

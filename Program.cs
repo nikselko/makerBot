@@ -1,10 +1,12 @@
 ﻿//"6737345303:AAGlFQ3qRwLBSCG_uBsgBpNYqwfGiSZnAoM"
 using System;
+using System.IO;
+using System.Net.Http;
+using System.Threading.Tasks;
 using DotNetTools.SharpGrabber;
 using DotNetTools.SharpGrabber.Exceptions;
-using DotNetTools.SharpGrabber.Auth;
 using DotNetTools.SharpGrabber.Grabbed;
-using DotNetTools.SharpGrabber.Converter;
+using DotNetTools.SharpGrabber.YouTube;
 using Telegram.Bot;
 using Telegram.Bot.Args;
 using Telegram.Bot.Types.ReplyMarkups;
@@ -22,7 +24,7 @@ namespace YourNamespace
 
         static void Main(string[] args)
         {
-            _botClient = new TelegramBotClient("6737345303:AAGlFQ3qRwLBSCG_uBsgBpNYqwfGiSZnAoM"); // Replace with your actual API token
+            _botClient = new TelegramBotClient("6737345303:AAGlFQ3qRwLBSCG_uBsgBpNYqwfGiSZnAoM");
 
             var me = _botClient.GetMeAsync().Result;
             Console.WriteLine($"Hello! I am user {me.Id} and my name is {me.FirstName}");
@@ -60,9 +62,8 @@ namespace YourNamespace
                             text: "Welcome! Please choose an option:",
                             replyMarkup: replyMarkup
                         );
-                        break; // Case start
+                        break;
 
-                    // Inside the "Create video" case
                     case "Create video":
                         BotState.IsWaitingForVideoLink = true;
 
@@ -70,116 +71,126 @@ namespace YourNamespace
                             chatId: e.Message.Chat.Id,
                             text: "Please provide a link to the YouTube video:"
                         );
-
-                        // Handler for receiving video link
-                        _botClient.OnMessage += async (sender, args) =>
-                        {
-                            if (BotState.IsWaitingForVideoLink && args.Message.Text != null && args.Message.Chat.Id == e.Message.Chat.Id)
-                            {
-                                var youtubeLink = args.Message.Text;
-
-                                var uri = new Uri(youtubeLink); 
-
-                                var grabber = GrabberFactory.GetGrabber(uri);
-                                var result = await grabber.GrabAsync(uri);
-
-                                if (result.IsSuccessful && result.Metadata != null && result.Metadata.Content != null)
-                                {
-                                    var video = result.Metadata.Content;
-
-                                    // Extract the best quality video URL from the parsed video metadata
-                                    var bestQualityVideo = video.GetBestStream();
-
-                                    if (bestQualityVideo != null)
-                                    {
-                                        BotState.IsWaitingForVideoLink = false; // Stop waiting for the link
-
-                                        using (var httpClient = new HttpClient())
-                                        {
-                                            var response = await httpClient.GetAsync(bestQualityVideo.Url);
-
-                                            if (response.IsSuccessStatusCode)
-                                            {
-                                                var videoBytes = await response.Content.ReadAsByteArrayAsync();
-
-                                                // Now you have the video file in videoBytes variable
-                                                // You can further process or send this video file as needed
-
-                                                // Inform the user that the video file is being processed or perform other actions
-                                                await _botClient.SendTextMessageAsync(
-                                                    chatId: args.Message.Chat.Id,
-                                                    text: "Video file received. Processing..."
-                                                );
-                                            }
-                                            else
-                                            {
-                                                await _botClient.SendTextMessageAsync(
-                                                    chatId: args.Message.Chat.Id,
-                                                    text: "Failed to fetch the video file. Please try again later."
-                                                );
-                                            }
-                                        }
-                                    }
-                                    else if (args.Message.Text.Equals("/stop", StringComparison.OrdinalIgnoreCase))
-                                    {
-                                        BotState.IsWaitingForVideoLink = false; // Stop waiting for the link
-
-                                        await _botClient.SendTextMessageAsync(
-                                            chatId: args.Message.Chat.Id,
-                                            text: "Operation canceled."
-                                        );
-                                    }
-                                    else
-                                    {
-                                        // Inform the user about the issue in finding the video stream
-                                        await _botClient.SendTextMessageAsync(
-                                            chatId: args.Message.Chat.Id,
-                                            text: "Failed to retrieve the video stream. Please try again later or type /stop to cancel."
-                                        );
-                                    }
-                                }
-                                else if (args.Message.Text.Equals("/stop", StringComparison.OrdinalIgnoreCase))
-                                {
-                                    BotState.IsWaitingForVideoLink = false; // Stop waiting for the link
-
-                                    await _botClient.SendTextMessageAsync(
-                                        chatId: args.Message.Chat.Id,
-                                        text: "Operation canceled."
-                                    );
-                                }
-                                else
-                                {
-                                    // Inform the user to provide a valid YouTube link
-                                    await _botClient.SendTextMessageAsync(
-                                        chatId: args.Message.Chat.Id,
-                                        text: "Invalid YouTube link. Please provide a correct link to the YouTube video or type /stop to cancel."
-                                    );
-                                }
-                            }
-                        };
-                        break; // Case Create Video
+                        break;
 
                     case "Balance":
                         await _botClient.SendTextMessageAsync(
                             chatId: e.Message.Chat.Id,
                             text: "Your current balance is..."
                         );
-                        break; //Case Balance
+                        break;
 
                     case "Stop Bot":
                         await _botClient.SendTextMessageAsync(
                             chatId: e.Message.Chat.Id,
                             text: "Your current balance is..."
                         );
-                        break; //Case Stop
+                        break;
 
                     default:
-                        await _botClient.SendTextMessageAsync(
-                            chatId: e.Message.Chat.Id,
-                            text: "Invalid command. Please use one of the provided options."
-                        );
+                        if (BotState.IsWaitingForVideoLink)
+                        {
+                            await ProcessYouTubeLink(e.Message.Text, e.Message.Chat.Id);
+                        }
+                        else
+                        {
+                            await _botClient.SendTextMessageAsync(
+                                chatId: e.Message.Chat.Id,
+                                text: "Invalid command. Please use one of the provided options."
+                            );
+                        }
                         break;
                 }
+            }
+        }
+
+        private static async Task ProcessYouTubeLink(string youtubeLink, long chatId)
+        {
+            try
+            {
+                var grabber = GrabberBuilder.New()
+                    .UseDefaultServices()
+                    .AddYouTube()
+                    .Build(); ;//.CreateBuilder().Build();
+
+                var result = await grabber.GrabAsync(new Uri(youtubeLink));
+
+                if (result != null)
+                {
+                    var video =  result.Resources<GrabbedMedia>();
+
+                    if (video != null)
+                    {
+                        var bestQualityStream = video.GetHighestQualityVideo();
+
+                        if (bestQualityStream != null)
+                        {
+                            using (var httpClient = new HttpClient())
+                            {
+                                var response = await httpClient.GetAsync(bestQualityStream.OriginalUri.ToString());
+
+                                if (response.IsSuccessStatusCode)
+                                {
+                                    var videoBytes = await response.Content.ReadAsByteArrayAsync();
+
+                                    // Now you have the video file in videoBytes variable
+                                    // You can further process or send this video file as needed
+
+                                    // Inform the user that the video file is being processed or perform other actions
+                                    await _botClient.SendTextMessageAsync(
+                                        chatId: chatId,
+                                        text: "Video file received. Processing..."
+                                    );
+
+                                    // Example: Sending the video file to the user (you may need to adapt this based on your requirements)
+                                    using (var videoStream = new MemoryStream(videoBytes))
+                                    {
+                                        await _botClient.SendVideoAsync(
+                                            chatId: chatId,
+                                            video: new Telegram.Bot.Types.InputFiles.InputOnlineFile(videoStream, "YourVideoFileName")
+                                        // Additional parameters can be added here as needed
+                                        );
+                                    }
+                                }
+                                else
+                                {
+                                    await _botClient.SendTextMessageAsync(
+                                        chatId: chatId,
+                                        text: "Failed to fetch the video file. Please try again later."
+                                    );
+                                }
+                            }
+                        }
+                        else
+                        {
+                            await _botClient.SendTextMessageAsync(
+                                chatId: chatId,
+                                text: "Failed to retrieve the video stream. Please try again later."
+                            );
+                        }
+                    }
+                    else
+                    {
+                        await _botClient.SendTextMessageAsync(
+                            chatId: chatId,
+                            text: "Failed to retrieve YouTube video metadata."
+                        );
+                    }
+                }
+                else
+                {
+                    await _botClient.SendTextMessageAsync(
+                        chatId: chatId,
+                        text: "Invalid YouTube link. Please provide a correct link to the YouTube video."
+                    );
+                }
+            }
+            catch (GrabException ex)
+            {
+                await _botClient.SendTextMessageAsync(
+                    chatId: chatId,
+                    text: $"Failed to process the YouTube link: {ex.Message}"
+                );
             }
         }
     }

@@ -48,3 +48,11 @@ C:\Users\nikse\Source\Repos\nikselko\makerBot\obj\Debug\net8.0\makerBot.csproj.C
 C:\Users\nikse\Source\Repos\nikselko\makerBot\obj\Debug\net8.0\makerBot.genruntimeconfig.cache
 C:\Users\nikse\Source\Repos\nikselko\makerBot\obj\Debug\net8.0\ref\makerBot.dll
 C:\Users\nikse\Source\Repos\nikselko\makerBot\bin\Debug\net8.0\YoutubeExtractor.dll
+C:\Users\nikse\Source\Repos\nikselko\makerBot\bin\Debug\net8.0\Esprima.dll
+C:\Users\nikse\Source\Repos\nikselko\makerBot\bin\Debug\net8.0\FFmpeg.AutoGen.dll
+C:\Users\nikse\Source\Repos\nikselko\makerBot\bin\Debug\net8.0\Jint.dll
+C:\Users\nikse\Source\Repos\nikselko\makerBot\bin\Debug\net8.0\SharpGrabber.dll
+C:\Users\nikse\Source\Repos\nikselko\makerBot\bin\Debug\net8.0\SharpGrabber.Converter.dll
+C:\Users\nikse\Source\Repos\nikselko\makerBot\bin\Debug\net8.0\SharpGrabber.Hls.dll
+C:\Users\nikse\Source\Repos\nikselko\makerBot\bin\Debug\net8.0\SharpGrabber.Instagram.dll
+C:\Users\nikse\Source\Repos\nikselko\makerBot\bin\Debug\net8.0\SharpGrabber.YouTube.dll
